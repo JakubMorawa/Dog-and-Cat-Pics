@@ -1,0 +1,53 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: linear-gradient(
+        155deg,
+        rgb(62, 200, 255) 0%,
+        rgb(120, 196, 117) 100%,
+        rgb(180, 255, 4) 100%
+    );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: Verdana, sans-serif;
+}
+
+.dogImage img {
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+    border: 3px solid #ffffff !important;
+}
+
+.text{
+    color:rgb(6, 0, 50);
+    font-size: 1.7rem;
+}
+
+.text ul{
+    list-style:none;
+}
+
+.text li{
+    margin-bottom: 10px;
+}
+
+.home {
+    text-align: center;
+    color:rgb(6, 0, 94);
+    font-size: 1.7rem;
+}
+
+.home header{
+    margin-bottom: 10px;
+    font-size: 3rem;
+}
+
+hr{
+    height:5px;
+    border-width: 3px;
+}
