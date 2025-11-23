@@ -1,8 +1,20 @@
-import flask
-import requests
+import os
 import random
+import requests
+from flask import Flask, render_template
+from dotenv import load_dotenv
 
-app = flask.Flask(__name__)
+# Load environment variables from .env
+load_dotenv()
+
+app = Flask(__name__)
+
+# Check API key
+API_KEY = os.environ.get("API_KEY")
+if not API_KEY:
+    raise ValueError("API_KEY not found. Please set it in your .env file.")
+
+headers = {"x-api-key": API_KEY}
 
 # Comments for dogs and cats
 dog_comments = [
@@ -34,11 +46,9 @@ cat_comments = [
 def getRandomComment(animal_type="dog"):
     return random.choice(dog_comments if animal_type == "dog" else cat_comments)
 
-# API configuration
+# API URLs
 baseUrlDog = "https://api.thedogapi.com/v1"
 baseUrlCat = "https://api.thecatapi.com/v1"
-API_KEY = "live_gu43vtrWpxPT9jK2a3OYTtmvKZgiVe0bnGVGwyk24z9il5MZKdXHnDROmFgB33NC"
-headers = {"x-api-key": API_KEY}
 
 # Helper to safely fetch data from API
 def fetch_data(url):
@@ -67,21 +77,20 @@ def getRandomCatData():
 # Routes
 @app.route('/')
 def index():
-    return flask.render_template("home.html")
+    return render_template("home.html")
 
 @app.route('/dog')
 def dog():
     dogData = getRandomDogData()
     if not dogData:
-        return flask.render_template("error.html", message="Failed to fetch dog data. Please try again later.")
+        return render_template("error.html", message="Failed to fetch dog data. Please try again later.")
 
-    imageUrl = dogData.get("url", "")
-    dogBreeds = dogData.get("breeds", [])
-    breed = dogBreeds[0] if dogBreeds else {}
+    breeds = dogData.get("breeds", [])
+    breed = breeds[0] if breeds else {}
 
-    return flask.render_template(
+    return render_template(
         "dog.html",
-        img=imageUrl,
+        img=dogData.get("url", ""),
         breed=breed.get("name", "Unknown"),
         breedGroup=breed.get("breed_group", "Unknown"),
         temperament=breed.get("temperament", "Unknown"),
@@ -95,15 +104,14 @@ def dog():
 def cat():
     catData = getRandomCatData()
     if not catData:
-        return flask.render_template("error.html", message="Failed to fetch cat data. Please try again later.")
+        return render_template("error.html", message="Failed to fetch cat data. Please try again later.")
 
-    imageUrl = catData.get("url", "")
-    catBreeds = catData.get("breeds", [])
-    breed = catBreeds[0] if catBreeds else {}
+    breeds = catData.get("breeds", [])
+    breed = breeds[0] if breeds else {}
 
-    return flask.render_template(
+    return render_template(
         "cat.html",
-        img=imageUrl,
+        img=catData.get("url", ""),
         breed=breed.get("name", "Unknown"),
         breedGroup=breed.get("breed_group", "Unknown"),
         temperament=breed.get("temperament", "Unknown"),
@@ -115,7 +123,7 @@ def cat():
 
 @app.route('/<path>')
 def default(path):
-    return flask.render_template("home.html")
+    return render_template("home.html")
 
 if __name__ == "__main__":
     app.run()
