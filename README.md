@@ -1,11 +1,10 @@
 
 
-## Dog & Cat Pics
+## <a href = "https://dog-and-cat-pics.onrender.com/">Dog & Cat Pics</a>
 <div align="center"> <img src="dogandcatScreenshot.png" alt="Dog and Cat Logo" > </div> <br>
 
 A fun and simple Flask web app that fetches random dog and cat pictures, along with breed info, temperament, weight, height, and a random cute comment.
 All powered by TheDogAPI and TheCatAPI.
-Go to <a href = "https://dog-and-cat-pics.onrender.com/">Dog & Cat Pics</a> to see the live website!
 
 
 ⭐ Features
